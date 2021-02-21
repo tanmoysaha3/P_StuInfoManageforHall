@@ -7,6 +7,7 @@ Reset Password,
 Profile Page,
 Filter email as student.just.edu.bd & just.edu.bd (kept as comment),
 Verify Email,
+Change Password
 
 # Next
 Admin-user access level,
