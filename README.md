@@ -1,4 +1,5 @@
 # P_StuInfoManageforHall
+Minimum SDK Version - API 24, Android 7.0
 
 # Done
 Register Page,
