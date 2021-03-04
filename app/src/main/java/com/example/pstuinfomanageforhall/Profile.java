@@ -33,7 +33,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class Profile extends AppCompatActivity {
-    TextView mName, mStudentId, mEmail, mPhone;
+    TextView mName, mStudentId, mEmail, mPhone, mAddress;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     String userID;
@@ -52,6 +52,7 @@ public class Profile extends AppCompatActivity {
         mStudentId=findViewById(R.id.profileStudentId);
         mEmail=findViewById(R.id.profileEmail);
         mPhone=findViewById(R.id.profilePhone);
+        mAddress=findViewById(R.id.profileAddress);
         mChangePassButton=findViewById(R.id.changePassButton);
         mProfileImage=findViewById(R.id.profileImage);
         mChangeProfileButton=findViewById(R.id.changeProfileButton);
@@ -78,6 +79,7 @@ public class Profile extends AppCompatActivity {
                 mStudentId.setText(documentSnapshot.getString("studentID"));
                 mEmail.setText(documentSnapshot.getString("email"));
                 mPhone.setText(documentSnapshot.getString("phone"));
+                mAddress.setText(documentSnapshot.getString("address"));
             }
         });
 
@@ -122,42 +124,16 @@ public class Profile extends AppCompatActivity {
         mChangeProfileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGalleryIntent,1000);
+                Intent i=new Intent(v.getContext(),EditProfile.class);
+                i.putExtra("fullName",mName.getText().toString());
+                i.putExtra("phone",mPhone.getText().toString());
+                i.putExtra("address",mAddress.getText().toString());
+                startActivity(i);
             }
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode ==1000){
-            if(resultCode== Activity.RESULT_OK){
-                Uri imageUri=data.getData();
-                mProfileImage.setImageURI(imageUri);
-                uploadImageToFirebase(imageUri);
-            }
-        }
-    }
 
-    private void uploadImageToFirebase(Uri imageUri) {
-        StorageReference fileRef=storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
-        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(Profile.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(mProfileImage);
-                    }
-                });
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Profile.this, "Failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+
+
 }
