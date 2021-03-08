@@ -100,7 +100,55 @@ public class Register extends AppCompatActivity {
 
                 //register the user in Firebase
 
-                fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                fAuth.createUserWithEmailAndPassword(email,password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                    @Override
+                    public void onSuccess(AuthResult authResult) {
+                        Toast.makeText(Register.this, "Account created", Toast.LENGTH_SHORT).show();
+
+                        //send verification email
+                        FirebaseUser fuser = fAuth.getCurrentUser();
+                        fuser.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(Register.this, "Verifivation email has been sent", Toast.LENGTH_SHORT).show();
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("TAG", "onFailure: Email not sent."+e.getMessage());
+                            }
+                        });
+
+                        userID = fAuth.getCurrentUser().getUid();
+
+                        DocumentReference documentReference = fStore.collection("users").document(userID);
+                        Map<String,Object> user = new HashMap<>();
+                        user.put("fullName",fullName);
+                        user.put("email",email);
+                        user.put("studentID",studentID);
+                        user.put("phone",phone);
+                        //Specify if  the user is admin
+                        user.put("isUser","1");
+                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d("TAG","onSuccess : user profile is created for " + userID);
+                            }
+                        });
+
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        finish();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Register.this, "Failed to create account", Toast.LENGTH_SHORT).show();
+                        mProgressBar.setVisibility((View.GONE));
+                    }
+                });
+
+                /*fAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()) {
@@ -129,6 +177,8 @@ public class Register extends AppCompatActivity {
                             user.put("email",email);
                             user.put("studentID",studentID);
                             user.put("phone",phone);
+                            //Specify if  the user is admin
+                            user.put("isUser","1");
                             documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
@@ -136,13 +186,14 @@ public class Register extends AppCompatActivity {
                                 }
                             });
                             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            finish();
                         }
                         else {
                             Toast.makeText(Register.this, "Error!"+ task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             mProgressBar.setVisibility((View.GONE));
                         }
                     }
-                });
+                });*/
             }
         });
 

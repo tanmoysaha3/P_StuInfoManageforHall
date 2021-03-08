@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PStuInfoManageforHall">
-        <activity android:name=".EditProfile"></activity>
+        <activity android:name=".SubAdmin"></activity>
+        <activity android:name=".Admin" />
+        <activity android:name=".EditProfile" />
         <activity android:name=".Profile" />
         <activity android:name=".Register" />
         <activity android:name=".Login">
@@ -22,13 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

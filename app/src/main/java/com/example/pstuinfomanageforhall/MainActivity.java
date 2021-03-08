@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),Profile.class));
             }
         });
+
     }
 
     public void logout(View view){
