@@ -1,25 +1,28 @@
 package com.example.pstuinfomanageforhall;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Admin extends AppCompatActivity {
 
-
-    Button mAddSAdminButton, mSeeAllUser;
+    Button mAddSAdminButton, mSeeAllUser, mCreateHallButton, mCreateFloorButton, mCreateRoomButton,
+            mCreateSeatButton;
     String userID;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -32,15 +35,49 @@ public class Admin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
-        /*Intent data = getIntent();
-        String isSubAdmin = data.getStringExtra("isSubAdmin");
-
-        mAddSAdminButton=findViewById(R.id.addSubAdminButton);
+        mCreateHallButton=findViewById(R.id.createHallButton);
+        mCreateFloorButton=findViewById(R.id.createFloorButton);
+        mCreateRoomButton=findViewById(R.id.createRoomButton);
+        mCreateSeatButton=findViewById(R.id.createSeatButton);
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
 
         userID=fAuth.getCurrentUser().getUid();
         fUser=fAuth.getCurrentUser();
+
+        mCreateHallButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddHall.class));
+            }
+        });
+
+        mCreateFloorButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddFloor.class));
+            }
+        });
+
+        mCreateRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddRoom.class));
+            }
+        });
+
+        mCreateSeatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),AddSeat.class));
+            }
+        });
+
+        /*Intent data = getIntent();
+        String isSubAdmin = data.getStringExtra("isSubAdmin");
+
+        mAddSAdminButton=findViewById(R.id.addSubAdminButton);
+
 
         mAddSAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override

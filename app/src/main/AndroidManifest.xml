@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PStuInfoManageforHall">
-        <activity android:name=".SubAdmin"></activity>
+        <activity android:name=".AddSeat"></activity>
+        <activity android:name=".AddRoom" />
+        <activity android:name=".AddFloor" />
+        <activity android:name=".AddHall" />
+        <activity android:name=".SubAdmin" />
         <activity android:name=".Admin" />
         <activity android:name=".EditProfile" />
         <activity android:name=".Profile" />
