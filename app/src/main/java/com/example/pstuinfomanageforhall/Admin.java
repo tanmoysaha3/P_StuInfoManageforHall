@@ -4,25 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class Admin extends AppCompatActivity {
 
     Button mAddSAdminButton, mSeeAllUser, mCreateHallButton, mCreateFloorButton, mCreateRoomButton,
-            mCreateSeatButton;
+            mCreateSeatButton, mSeeStuDetailsButton;
     String userID;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -39,6 +31,7 @@ public class Admin extends AppCompatActivity {
         mCreateFloorButton=findViewById(R.id.createFloorButton);
         mCreateRoomButton=findViewById(R.id.createRoomButton);
         mCreateSeatButton=findViewById(R.id.createSeatButton);
+        mSeeStuDetailsButton=findViewById(R.id.seeStuDetailsButton);
         fAuth=FirebaseAuth.getInstance();
         fStore=FirebaseFirestore.getInstance();
 
@@ -70,6 +63,13 @@ public class Admin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),AddSeat.class));
+            }
+        });
+
+        mSeeStuDetailsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),SeeStuDetails.class));
             }
         });
 

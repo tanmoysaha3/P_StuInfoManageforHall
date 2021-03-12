@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PStuInfoManageforHall">
-        <activity android:name=".AddSeat"></activity>
+        <activity android:name=".ShowStuDetails"></activity>
+        <activity android:name=".SeeStuDetails" />
+        <activity android:name=".AddSeat" />
         <activity android:name=".AddRoom" />
         <activity android:name=".AddFloor" />
         <activity android:name=".AddHall" />
